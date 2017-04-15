@@ -29,7 +29,7 @@ type SourceControlService struct {
 
 func (sourceControlService *SourceControlService) GetRepositoriesWithCommits(query string, total int) []Repository {
 	repos := sourceControlService.Gateway.GetRepositories(query, total)
-	for i, _ := range repos {
+	for i := range repos {
 		repo := &repos[i]
 		repo.Commits = sourceControlService.Gateway.GetCommits(repo.Owner, repo.Name, total)
 	}
