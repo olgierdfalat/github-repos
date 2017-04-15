@@ -24,9 +24,14 @@ type SourceControlGateway interface {
 }
 
 type SourceControlService struct {
-	SourceControlGateway SourceControlGateway
+	Gateway SourceControlGateway
 }
 
 func (sourceControlService *SourceControlService) GetRepositoriesWithCommits(query string, total int) []Repository {
-	return make([]Repository, 0)
+	repos := sourceControlService.Gateway.GetRepositories(query, total)
+	for _, repo := range repos {
+		repo.Commits = sourceControlService.Gateway.GetCommits(repo.Owner, repo.Name, total)
+	}
+
+	return repos
 }
