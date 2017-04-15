@@ -17,7 +17,11 @@ type Commit struct {
 	Date time.Time
 }
 
-type SourceControlGateway interface {
-	GetRepositories(query string, total int) Repository[]
-	GetCommits(owner string, repoName string, total int) Commit[]
+type sourceControlGateway interface {
+	getRepositories(query string, total int) Repository[]
+	getCommits(owner string, repoName string, total int) Commit[]
+}
+
+type SourceControlService interface {
+	GetRepositoriesWithCommits(query string, total int) Repository[]
 }
