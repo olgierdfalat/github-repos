@@ -49,59 +49,61 @@ func TestGetRepositoriesWithCommits_CommitsAreReturned(t *testing.T) {
 	actual := service.GetRepositoriesWithCommits("*", 5)
 
 	if len(actual) != len(expectedRepos) {
-		t.Errorf("Expected: length %b, Actual: length %b", len(expectedRepos), len(actual))
+		t.Fatalf("Expected: length %v, Actual: length %v", len(expectedRepos), len(actual))
 	}
 
 	RepoEquals(expectedRepos[0], actual[0], t)
 	RepoEquals(expectedRepos[1], actual[1], t)
+
+	CommitsEqual(expectedRepo1Commits, expectedRepos[0].Commits, t)
+	CommitsEqual(expectedRepo2Commits, expectedRepos[1].Commits, t)
 }
 
 func RepoEquals(expectedRepo sourcecontrol.Repository, actualRepo sourcecontrol.Repository, t *testing.T) {
 	if expectedRepo.Name != actualRepo.Name {
-		t.Errorf("Expected: Name %s, Actual: Name %s", expectedRepo.Name, actualRepo.Name)
+		t.Fatalf("Expected: Name %s, Actual: Name %s", expectedRepo.Name, actualRepo.Name)
 	}
 
 	if expectedRepo.Owner != actualRepo.Owner {
-		t.Errorf("Expected: Owner %s, Actual: Owner %s", expectedRepo.Owner, actualRepo.Owner)
+		t.Fatalf("Expected: Owner %s, Actual: Owner %s", expectedRepo.Owner, actualRepo.Owner)
 	}
 
 	if expectedRepo.URL != actualRepo.URL {
-		t.Errorf("Expected: URL %s, Actual: URL %s", expectedRepo.URL, actualRepo.URL)
+		t.Fatalf("Expected: URL %s, Actual: URL %s", expectedRepo.URL, actualRepo.URL)
 	}
 
 	if expectedRepo.Created != actualRepo.Created {
-		t.Errorf("Expected: Created %s, Actual: Created %s", expectedRepo.Created.Format(time.RFC3339), actualRepo.Created.Format(time.RFC3339))
+		t.Fatalf("Expected: Created %s, Actual: Created %s", expectedRepo.Created.Format(time.RFC3339), actualRepo.Created.Format(time.RFC3339))
 	}
 
 	if expectedRepo.LastPushed != actualRepo.LastPushed {
-		t.Errorf("Expected: LastPushed %s, Actual: LastPushed %s", expectedRepo.LastPushed.Format(time.RFC3339), actualRepo.LastPushed.Format(time.RFC3339))
-	}
-
-	if len(expectedRepo.Commits) != len(actualRepo.Commits) {
-		t.Errorf("Expected: Commits length %b, Actual: %b", len(expectedRepo.Commits), len(actualRepo.Commits))
-	}
-
-	for i := range expectedRepo.Commits {
-		expectedCommit := expectedRepo.Commits[i]
-		actualCommit := actualRepo.Commits[i]
-		CommitEquals(expectedCommit, actualCommit, t)
+		t.Fatalf("Expected: LastPushed %s, Actual: LastPushed %s", expectedRepo.LastPushed.Format(time.RFC3339), actualRepo.LastPushed.Format(time.RFC3339))
 	}
 }
 
-func CommitEquals(expectedCommit sourcecontrol.Commit, actualCommit sourcecontrol.Commit, t *testing.T) {
-	if expectedCommit.Date != actualCommit.Date {
-		t.Errorf("Expected: Date %s, Actual: Date %s", expectedCommit.Date.Format(time.RFC3339), actualCommit.Date.Format(time.RFC3339))
+func CommitsEqual(expectedCommits []sourcecontrol.Commit, actualCommits []sourcecontrol.Commit, t *testing.T) {
+	if len(expectedCommits) != len(actualCommits) {
+		t.Fatalf("Expected: Commits length %v, Actual: %v", len(expectedCommits), len(actualCommits))
 	}
 
-	if expectedCommit.Message != actualCommit.Message {
-		t.Errorf("Expected: Message %s, Actual: Message %s", expectedCommit.Message, actualCommit.Message)
-	}
+	for i := range expectedCommits {
+		expectedCommit := expectedCommits[i]
+		actualCommit := actualCommits[i]
 
-	if expectedCommit.SHA != actualCommit.SHA {
-		t.Errorf("Expected: SHA %s, Actual: SHA %s", expectedCommit.SHA, actualCommit.SHA)
-	}
+		if expectedCommit.Date != actualCommit.Date {
+			t.Fatalf("Expected: Date %s, Actual: Date %s", expectedCommit.Date.Format(time.RFC3339), actualCommit.Date.Format(time.RFC3339))
+		}
 
-	if expectedCommit.Author != actualCommit.Author {
-		t.Errorf("Expected: Author %s, Actual: Author %s", expectedCommit.Author, actualCommit.Author)
+		if expectedCommit.Message != actualCommit.Message {
+			t.Fatalf("Expected: Message %s, Actual: Message %s", expectedCommit.Message, actualCommit.Message)
+		}
+
+		if expectedCommit.SHA != actualCommit.SHA {
+			t.Fatalf("Expected: SHA %s, Actual: SHA %s", expectedCommit.SHA, actualCommit.SHA)
+		}
+
+		if expectedCommit.Author != actualCommit.Author {
+			t.Fatalf("Expected: Author %s, Actual: Author %s", expectedCommit.Author, actualCommit.Author)
+		}
 	}
 }
