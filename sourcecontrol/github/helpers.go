@@ -13,7 +13,7 @@ func newHttpClient() http.Client {
 func newHttpRequest(path string) (*http.Request, error) {
 	apiUrl := GitHubApiHost + path
 
-	request, err := http.NewRequest(http.MethodGet, apiUrl, nil)
+	request, err := http.NewRequest("GET", apiUrl, nil)
 	if err != nil {
 		return request, err
 	}
