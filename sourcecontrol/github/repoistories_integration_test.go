@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func TestGetRepositories_ReturnsCorrectAmountOfRepositories(t *testing.T) {
+func TestGitHubGateway_GetRepositories_ReturnsCorrectAmountOfRepositories(t *testing.T) {
 	cases := []struct {
 		count int
 	}{
@@ -28,7 +28,7 @@ func TestGetRepositories_ReturnsCorrectAmountOfRepositories(t *testing.T) {
 	}
 }
 
-func TestGetRepositories_ReturnsDomainRepository(t *testing.T) {
+func TestGitHubGateway_GetRepositories_ReturnsDomainRepository(t *testing.T) {
 	gateway := github.GitHubGateway{}
 	repos, err := gateway.GetRepositories("test", 5)
 
