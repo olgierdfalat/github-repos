@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+const CommitPathFormat string = "/repos/%s/%s/commits?per_page=%v"
+
 func (gateway GitHubGateway) GetCommits(owner string, repoName string, total int) ([]sourcecontrol.Commit, error) {
 	return []sourcecontrol.Commit {
 		{ "Google", "54544545", "Commit num 1", time.Now() },

@@ -3,6 +3,8 @@ package github
 import (
 	"net/http"
 	"fmt"
+	"io/ioutil"
+	"encoding/json"
 )
 
 func newHttpClient() http.Client {
@@ -21,4 +23,27 @@ func newHttpRequest(path string) (*http.Request, error) {
 	request.Header.Add("User-Agent", "MyGoApp")
 
 	return request, nil
+}
+
+func getAndUnmarshall(path string, out interface{}) error {
+	client := newHttpClient()
+	request, err := newHttpRequest(path)
+	if err != nil {
+		return err
+	}
+
+	response, err := client.Do(request)
+
+	defer response.Body.Close()
+	body, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(body, out)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

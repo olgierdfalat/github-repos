@@ -4,8 +4,6 @@ import (
 	"time"
 	"bitbucket.org/michaellockwood/github-repos/sourcecontrol"
 	"fmt"
-	"io/ioutil"
-	"encoding/json"
 )
 
 const RepoSearchPathFormat string = "/search/repositories?q=%s&per_page=%v"
@@ -27,22 +25,8 @@ type searchResponse struct {
 }
 
 func (gateway GitHubGateway) GetRepositories(query string, total int) ([]sourcecontrol.Repository, error) {
-	client := newHttpClient()
-	request, err := newHttpRequest(fmt.Sprintf(RepoSearchPathFormat, query, total))
-	if err != nil {
-		return nil, err
-	}
-
-	response, err := client.Do(request)
-
-	defer response.Body.Close()
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		return nil, err
-	}
-
 	var searchResponse searchResponse
-	err = json.Unmarshal(body, &searchResponse)
+	err := getAndUnmarshall(fmt.Sprintf(RepoSearchPathFormat, query, total), &searchResponse)
 	if err != nil {
 		return nil, err
 	}
