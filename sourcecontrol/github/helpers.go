@@ -2,7 +2,6 @@ package github
 
 import (
 	"net/http"
-	"fmt"
 	"io/ioutil"
 	"encoding/json"
 )
@@ -13,8 +12,6 @@ func newHttpClient() http.Client {
 
 func newHttpRequest(path string) (*http.Request, error) {
 	apiUrl := GitHubApiHost + path
-
-	fmt.Printf("URL: %s\n", apiUrl)
 
 	request, err := http.NewRequest(http.MethodGet, apiUrl, nil)
 	if err != nil {
