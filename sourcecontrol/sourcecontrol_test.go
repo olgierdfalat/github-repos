@@ -37,16 +37,16 @@ func TestGetRepositoriesWithCommits_CommitsAreReturned(t *testing.T) {
 	gatewayMock := mock_sourcecontrol.NewMockSourceControlGateway(ctrl)
 	gatewayMock.EXPECT().
 		GetRepositories("*", 5).
-		Return(expectedRepos)
+		Return(expectedRepos, nil)
 	gatewayMock.EXPECT().
 		GetCommits("golang", "go", 5).
-		Return(expectedRepo1Commits)
+		Return(expectedRepo1Commits, nil)
 	gatewayMock.EXPECT().
 		GetCommits("microsoft", "c#", 5).
-		Return(expectedRepo2Commits)
+		Return(expectedRepo2Commits, nil)
 	service := sourcecontrol.SourceControlService{gatewayMock}
 
-	actual := service.GetRepositoriesWithCommits("*", 5)
+	actual, _ := service.GetRepositoriesWithCommits("*", 5)
 
 	if len(actual) != len(expectedRepos) {
 		t.Fatalf("Expected: length %v, Actual: length %v", len(expectedRepos), len(actual))

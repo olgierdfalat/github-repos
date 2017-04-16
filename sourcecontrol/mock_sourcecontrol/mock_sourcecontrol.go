@@ -29,20 +29,22 @@ func (_m *MockSourceControlGateway) EXPECT() *_MockSourceControlGatewayRecorder 
 	return _m.recorder
 }
 
-func (_m *MockSourceControlGateway) GetCommits(_param0 string, _param1 string, _param2 int) []sourcecontrol.Commit {
+func (_m *MockSourceControlGateway) GetCommits(_param0 string, _param1 string, _param2 int) ([]sourcecontrol.Commit, error) {
 	ret := _m.ctrl.Call(_m, "GetCommits", _param0, _param1, _param2)
 	ret0, _ := ret[0].([]sourcecontrol.Commit)
-	return ret0
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 func (_mr *_MockSourceControlGatewayRecorder) GetCommits(arg0, arg1, arg2 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "GetCommits", arg0, arg1, arg2)
 }
 
-func (_m *MockSourceControlGateway) GetRepositories(_param0 string, _param1 int) []sourcecontrol.Repository {
+func (_m *MockSourceControlGateway) GetRepositories(_param0 string, _param1 int) ([]sourcecontrol.Repository, error) {
 	ret := _m.ctrl.Call(_m, "GetRepositories", _param0, _param1)
 	ret0, _ := ret[0].([]sourcecontrol.Repository)
-	return ret0
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 func (_mr *_MockSourceControlGatewayRecorder) GetRepositories(arg0, arg1 interface{}) *gomock.Call {

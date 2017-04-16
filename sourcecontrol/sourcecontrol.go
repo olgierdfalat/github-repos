@@ -19,20 +19,26 @@ type Commit struct {
 }
 
 type SourceControlGateway interface {
-	GetRepositories(query string, total int) []Repository
-	GetCommits(owner string, repoName string, total int) []Commit
+	GetRepositories(query string, total int) ([]Repository, error)
+	GetCommits(owner string, repoName string, total int) ([]Commit, error)
 }
 
 type SourceControlService struct {
 	Gateway SourceControlGateway
 }
 
-func (sourceControlService *SourceControlService) GetRepositoriesWithCommits(query string, total int) []Repository {
-	repos := sourceControlService.Gateway.GetRepositories(query, total)
+func (sourceControlService *SourceControlService) GetRepositoriesWithCommits(query string, total int) ([]Repository, error) {
+	repos, err := sourceControlService.Gateway.GetRepositories(query, total)
+	if err != nil {
+		return nil, err
+	}
 	for i := range repos {
 		repo := &repos[i]
-		repo.Commits = sourceControlService.Gateway.GetCommits(repo.Owner, repo.Name, total)
+		repo.Commits, err = sourceControlService.Gateway.GetCommits(repo.Owner, repo.Name, total)
+		if err != nil {
+			return nil, err
+		}
 	}
 
-	return repos
+	return repos, nil
 }

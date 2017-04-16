@@ -5,12 +5,17 @@ import (
 	"bitbucket.org/michaellockwood/github-repos/sourcecontrol/github"
 	"bitbucket.org/michaellockwood/github-repos/sourcecontrol"
 	"time"
+	"os"
 )
 
 func main() {
 	srcService := sourcecontrol.SourceControlService{github.GitHubGateway{}}
 
-	repos := srcService.GetRepositoriesWithCommits("test", 5)
+	repos, err := srcService.GetRepositoriesWithCommits("test", 5)
+
+	if err != nil {
+		exit(err)
+	}
 
 	for _, repo := range repos {
 		fmt.Println("----------------------------------------------")
@@ -21,4 +26,12 @@ func main() {
 		}
 		fmt.Println("---------------------------------------------")
 	}
+}
+
+func exit(err error) {
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s\n", err)
+		os.Exit(1)
+	}
+	fmt.Printf("No error")
 }
