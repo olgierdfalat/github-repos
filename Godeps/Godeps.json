@@ -1,0 +1,14 @@
+{
+	"ImportPath": "bitbucket.org/michaellockwood/github-repos",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v79",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/golang/mock/gomock",
+			"Rev": "bd3c8e81be01eef76d4b503f5e687d2d1354d2d9"
+		}
+	]
+}
