@@ -2,10 +2,10 @@ package sourcecontrol_test
 
 import (
 	"testing"
-	"bitbucket.org/michaellockwood/github-repos/sourcecontrol"
+	"github.com/michaellockwood/github-repos/sourcecontrol"
 	"github.com/golang/mock/gomock"
 	"time"
-	"bitbucket.org/michaellockwood/github-repos/sourcecontrol/mock_sourcecontrol"
+	"github.com/michaellockwood/github-repos/sourcecontrol/mock_sourcecontrol"
 )
 
 func TestGetRepositoriesWithCommits_CommitsAreReturned(t *testing.T) {
