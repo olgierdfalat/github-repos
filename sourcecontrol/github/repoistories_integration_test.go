@@ -2,7 +2,7 @@ package github_test
 
 import (
 	"testing"
-	"bitbucket.org/michaellockwood/github-repos/sourcecontrol/github"
+	"github.com/michaellockwood/github-repos/sourcecontrol/github"
 	"time"
 )
 
