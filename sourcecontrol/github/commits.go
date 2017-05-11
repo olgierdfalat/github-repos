@@ -1,7 +1,7 @@
 package github
 
 import (
-	"bitbucket.org/michaellockwood/github-repos/sourcecontrol"
+	"github.com/michaellockwood/github-repos/sourcecontrol"
 	"time"
 	"fmt"
 )

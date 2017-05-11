@@ -4,7 +4,7 @@
 package mock_sourcecontrol
 
 import (
-	sourcecontrol "bitbucket.org/michaellockwood/github-repos/sourcecontrol"
+	sourcecontrol "github.com/michaellockwood/github-repos/sourcecontrol"
 	gomock "github.com/golang/mock/gomock"
 )
 

@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"bitbucket.org/michaellockwood/github-repos/sourcecontrol/github"
-	"bitbucket.org/michaellockwood/github-repos/sourcecontrol"
+	"github.com/michaellockwood/github-repos/sourcecontrol/github"
+	"github.com/michaellockwood/github-repos/sourcecontrol"
 	"time"
 	"os"
 )
